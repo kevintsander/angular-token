@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "prepare": "npm run build",
+    "prepare": "ng build angular-token",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "test:lib": "ng test angular-token"
