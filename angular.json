@@ -70,10 +70,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "angular-token-app:build:production"
+              "buildTarget": "angular-token-app:build:production"
             },
             "development": {
-              "browserTarget": "angular-token-app:build:development"
+              "buildTarget": "angular-token-app:build:development"
             }
           },
           "defaultConfiguration": "development"
