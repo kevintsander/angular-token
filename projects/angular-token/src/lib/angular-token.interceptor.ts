@@ -9,7 +9,7 @@ import { tap } from 'rxjs/operators';
 @Injectable()
 export class AngularTokenInterceptor implements HttpInterceptor {
 
-  constructor( private tokenService: AngularTokenService ) { }
+  constructor(private tokenService: AngularTokenService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -24,10 +24,10 @@ export class AngularTokenInterceptor implements HttpInterceptor {
 
       const headers = {
         'access-token': authData.accessToken,
-        'client':       authData.client,
-        'expiry':       authData.expiry,
-        'token-type':   authData.tokenType,
-        'uid':          authData.uid
+        'client': authData.client,
+        'expiry': authData.expiry,
+        'token-type': authData.tokenType,
+        'uid': authData.uid
       };
 
       req = req.clone({
@@ -35,10 +35,12 @@ export class AngularTokenInterceptor implements HttpInterceptor {
       });
     }
 
-    return next.handle(req).pipe(tap(
-        res => this.handleResponse(res),
-        err => this.handleResponse(err)
-    ));
+    return next.handle(req).pipe(
+      tap({
+        next: (res) => this.handleResponse(res),
+        error: (err) => this.handleResponse(err)
+      })
+    );
   }
 
 

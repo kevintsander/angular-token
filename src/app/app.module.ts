@@ -26,7 +26,7 @@ import { fakeBackendProvider } from './fake-backend';
 
     AngularTokenModule.forRoot({
       // Change to your local dev environment example: 'http://localhost:3000'
-      apiBase: 'https://mock-api-server',
+      apiBase: 'http://localhost:3000',
     }),
 
     BrowserAnimationsModule,

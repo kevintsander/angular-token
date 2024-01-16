@@ -28,7 +28,7 @@ import {
 @Injectable({
   providedIn: 'root',
 })
-export class AngularTokenService  {
+export class AngularTokenService {
 
   get currentUserType(): string {
     if (this.userType.value != null) {
