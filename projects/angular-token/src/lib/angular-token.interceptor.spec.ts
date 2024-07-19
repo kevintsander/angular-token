@@ -1,5 +1,5 @@
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed, inject } from '@angular/core/testing';
 
 import { AngularTokenModule } from './angular-token.module';
@@ -21,15 +21,21 @@ describe('AngularTokenInterceptor', () => {
   function initService(serviceConfig: AngularTokenOptions) {
     // Inject HTTP and AngularTokenService
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientModule,
-        HttpClientTestingModule,
-        AngularTokenModule.forRoot(serviceConfig)
-      ],
-      providers: [
-        AngularTokenService
-      ]
-    });
+    imports: [HttpClientModule,
+        AngularTokenModule.forRoot(serviceConfig)],
+    providers: [
+        AngularTokenService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}{
+    imports: [HttpClientTestingModule,
+        AngularTokenModule.forRoot(serviceConfig)],
+    providers: [
+        AngularTokenService,
+        provideHttpClient(withInterceptorsFromDi())
+    ]
+});
 
     backend = TestBed.inject(HttpTestingController);
   }

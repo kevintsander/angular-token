@@ -1,5 +1,5 @@
-import { HttpClientModule } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { AngularTokenModule } from './angular-token.module';
@@ -141,16 +141,23 @@ describe('AngularTokenService', () => {
   function initService(serviceConfig: AngularTokenOptions) {
     // Inject HTTP and AngularTokenService
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientModule,
-        HttpClientTestingModule,
-        AngularTokenModule.forRoot(serviceConfig)
-      ],
-      providers: [
+    imports: [HttpClientModule,
+        AngularTokenModule.forRoot(serviceConfig)],
+    providers: [
         AngularTokenService,
-        { provide: 'Window', useValue: fakeWindow }
-      ]
-    });
+        { provide: 'Window', useValue: fakeWindow },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}{
+    imports: [HttpClientTestingModule,
+        AngularTokenModule.forRoot(serviceConfig)],
+    providers: [
+        AngularTokenService,
+        { provide: 'Window', useValue: fakeWindow },
+        provideHttpClient(withInterceptorsFromDi())
+    ]
+});
 
     service = TestBed.inject(AngularTokenService);
     backend = TestBed.inject(HttpTestingController);
